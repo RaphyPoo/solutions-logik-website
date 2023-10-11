@@ -6,6 +6,11 @@
 *
 * Contexts
 */
+.container-background{
+  background-color: #ffffffd2;
+  padding-bottom: 10px;
+}
+
 a:focus,
 button:focus {
 	outline: none !important;
