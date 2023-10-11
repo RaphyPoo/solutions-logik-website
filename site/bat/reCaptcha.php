@@ -12,6 +12,7 @@ $lang = 'en';
 
 // If No key
 if ($siteKey === '' || $secret === ''):
+  console.log('CPT000');
   die('CPT001');
 elseif (isset($_POST['g-recaptcha-response'])):
 
