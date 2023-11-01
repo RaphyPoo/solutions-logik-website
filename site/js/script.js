@@ -317,7 +317,7 @@
 		 * @desc Attach form validation to elements
 		 * @param {object} elements - jQuery object
 		 */
-		function attachFormValidator(elements) {
+		function attachFormValidator(elements, language) {
 			// Custom validator - phone number
 			regula.custom({
 				name: 'PhoneNumber',
@@ -361,7 +361,7 @@
 				},
 				{
 					type: regula.Constraint.Numeric,
-					newMessage: "Only numbers are required"
+					newMessage: "Only numbers are required."
 				},
 				{
 					type: regula.Constraint.Selected,
@@ -369,9 +369,32 @@
 				}
 			];
 
+      var regularConstraintsFrenchMessages = [
+        {
+          type: regula.Constraint.Required,
+          newMessage: "Le champ de texte est obligatoire."
+        },
+        {
+          type: regula.Constraint.Email,
+          newMessage: "L'e-mail n'est pas un e-mail valide."
+        },
+        {
+          type: regula.Constraint.Numeric,
+          newMessage: "Seuls les chiffres sont requis."
+        },
+        {
+          type: regula.Constraint.Selected,
+          newMessage: "Veuillez choisir une option."
+        }
+      ];
 
-			for (var i = 0; i < regularConstraintsMessages.length; i++) {
-				var regularConstraint = regularConstraintsMessages[i];
+      let constraints = regularConstraintsMessages;
+      if (language == "fr") {
+        constraints = regularConstraintsFrenchMessages;
+      }
+
+      for (var i = 0; i < constraints.length; i++) {
+        var regularConstraint = constraints[i];
 
 				regula.override({
 					constraintType: regularConstraint.type,
@@ -973,7 +996,12 @@
 
 		// Regula
 		if (plugins.regula.length) {
-			attachFormValidator(plugins.regula);
+      let htmlPage = window.location.href.split('/').reverse()[0];
+      let language = "en";
+      if (htmlPage == 'indexfr.html') {
+        language = "fr"
+      }
+			attachFormValidator(plugins.regula, language);
 		}
 
 		// RD Mailform
